@@ -12,6 +12,8 @@ RUN \
   tar \
   xz \
   ; \
+  # Warning! This case not tested with multi-arch build
+  # See https://github.com/just-containers/s6-overlay?tab=readme-ov-file#which-architecture-to-use-depending-on-your-targetarch
   case "${TARGETARCH}${TARGETVARIANT:+/${TARGETVARIANT}}" in \
   amd64) S6_ARCH="x86_64" ;; \
   arm64) S6_ARCH="aarch64" ;; \
@@ -34,6 +36,7 @@ RUN \
   sha256sum -c "s6-overlay-${S6_ARCH}.tar.xz.sha256"; \
   tar -xJf "s6-overlay-noarch.tar.xz" -C /; \
   tar -xJf "s6-overlay-${S6_ARCH}.tar.xz" -C /; \
+  cd /; \
   rm -rf "$S6_TEMP_DIR"; \
   apk del --purge --no-network .install-dependencies;
 
