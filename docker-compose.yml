@@ -1,0 +1,28 @@
+x-logging: &logging-systemd
+  logging:
+    driver: journald
+
+x-logging-loki: &logging-loki
+  logging:
+    driver: loki
+    options:
+      mode: "non-blocking"
+      loki-url: http://127.0.0.1:3100/loki/api/v1/push
+      max-size: "50m"
+      max-file: "2"
+
+x-build: &build
+  image: "s6-overlay"
+  build:
+    context: .
+    dockerfile: ./Dockerfile
+
+services:
+  s6-overlay:
+    <<:
+      #- *logging-systemd
+      #- *logging-loki
+      - *build
+    container_name: s6-overlay
+    hostname: s6-overlay
+    restart: always
