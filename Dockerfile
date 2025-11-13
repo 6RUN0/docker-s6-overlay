@@ -1,1 +1,1 @@
-Dockerfile.debian-slim
+debian/Dockerfile
