@@ -3,8 +3,7 @@ ARG APLINE_VERSION=latest
 FROM alpine:${APLINE_VERSION}
 
 ARG S6_OVERLAY_VERSION=3.2.1.0
-ARG TARGETARCH="amd64"
-ARG TARGETVARIANT=""
+ARG S6_ARCH="x86_64"
 
 RUN \
   set -eux; \
@@ -12,19 +11,6 @@ RUN \
   tar \
   xz \
   ; \
-  # Warning! This case not tested with multi-arch build
-  # See https://github.com/just-containers/s6-overlay?tab=readme-ov-file#which-architecture-to-use-depending-on-your-targetarch
-  case "${TARGETARCH}${TARGETVARIANT:+/${TARGETVARIANT}}" in \
-  amd64) S6_ARCH="x86_64" ;; \
-  arm64) S6_ARCH="aarch64" ;; \
-  arm/v7) S6_ARCH="arm" ;; \
-  arm/v6) S6_ARCH="armhf" ;; \
-  386) S6_ARCH="i686" ;; \
-  riscv64) S6_ARCH="riscv64" ;; \
-  s390x) S6_ARCH="s390x" ;; \
-  arm) S6_ARCH="armhf" ;; \
-  *) echo "Unsupported arch: ${TARGETARCH} ${TARGETVARIANT:-}"; exit 1 ;; \
-  esac; \
   S6_BASE_URL="https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}"; \
   S6_TEMP_DIR="$(mktemp -d)"; \
   cd "$S6_TEMP_DIR"; \

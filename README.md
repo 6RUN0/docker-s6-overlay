@@ -1,15 +1,14 @@
-# Alpine + s6-overlay
+# Docker s6-overlay
 
-Minimal Docker base image built on [Alpine Linux](https://alpinelinux.org/)
+Minimal Docker base image built on [Alpine Linux](https://alpinelinux.org)
+or [Debian](https://www.debian.org)
 with [s6-overlay v3](https://github.com/just-containers/s6-overlay)
 as the init system and process supervisor.
-
-> Warning! Multi-arch build not tested yet.
 
 ## Getting Started
 
 ```sh
-docker run --rm -d 6run0/s6-overlay
+docker run --rm -d 6run0/s6-overlay:alpine
 ```
 
 ## References

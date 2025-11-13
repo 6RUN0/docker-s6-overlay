@@ -11,18 +11,33 @@ x-logging-loki: &logging-loki
       max-size: "50m"
       max-file: "2"
 
-x-build: &build
-  image: "s6-overlay"
+x-build-alpine: &build-alpine
+  image: "s6-overlay-alpine"
   build:
     context: .
-    dockerfile: ./Dockerfile
+    dockerfile: ./Dockerfile.alpine
+
+x-build-debian-slim: &build-debian-slim
+  image: "s6-overlay-debian-slim"
+  build:
+    context: .
+    dockerfile: ./Dockerfile.debian-slim
 
 services:
-  s6-overlay:
+  s6-overlay-debian-slim:
     <<:
       #- *logging-systemd
       #- *logging-loki
-      - *build
-    container_name: s6-overlay
-    hostname: s6-overlay
+      - *build-debian-slim
+    container_name: s6-overlay-debian-slim
+    hostname: s6-overlay-debian-slim
+    restart: always
+
+  s6-overlay-alpine:
+    <<:
+      #- *logging-systemd
+      #- *logging-loki
+      - *build-alpine
+    container_name: s6-overlay-alpine
+    hostname: s6-overlay-alpine
     restart: always
