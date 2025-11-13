@@ -15,13 +15,13 @@ x-build-alpine: &build-alpine
   image: "s6-overlay-alpine"
   build:
     context: .
-    dockerfile: ./Dockerfile.alpine
+    dockerfile: ./alpine/Dockerfile
 
 x-build-debian-slim: &build-debian-slim
   image: "s6-overlay-debian-slim"
   build:
     context: .
-    dockerfile: ./Dockerfile.debian-slim
+    dockerfile: ./debian/Dockerfile
 
 services:
   s6-overlay-debian-slim:
